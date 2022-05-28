@@ -1,0 +1,25 @@
+﻿@model BookStore.Domain.Entities.Book
+<div class="card card-body d-flex flex-column row" style="break-inside: avoid; background-color: #e6e6e6; border-color: #e6e6e6; transition: 1s ease-in;">
+    @if (Model.ImageData != null)
+            {
+                <img class="img-fluid card-img-top  mr-2 mb-1 w-100" style="transition: 1s ease-in-out;"
+                     src="@Url.Action("GetImage", "Book", new {Model.BookId})"/>
+            }
+    <h3>
+        <a href="@Url.Action("Detail", "Book", new {id = Model.BookId})">@Model.Title</a>
+    </h3>
+    <h4>
+        <span class="font-weight-normal">Author: @Model.Author.ToString()</span>
+    </h4>
+    @if (Model.Quantity != 0)
+    {
+        using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="float-right">
+                @Html.HiddenFor(x => x.BookId)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Get" style="background-color: #2bc064;"/>
+            </div>
+        }
+    }
+</div>

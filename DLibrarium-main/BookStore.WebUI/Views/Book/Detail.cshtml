@@ -1,0 +1,17 @@
+﻿@using BookStore.WebUI.Models
+@using BookStore.WebUI.HtmlHelpers
+@model BooksListViewModel
+@{
+    ViewBag.Title = "Books";
+}
+<div class="card-columns" style="column-count: 4;">
+    @foreach (var p in @Model.Books)
+    {
+        @Html.Partial("BookSummary", p)
+    }
+</div>
+
+<div class="btn-group bg-light mt-4" style="border-radius: 5px;">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List",
+        new { page = x, genre = Model.CurrentGenre }))
+</div>

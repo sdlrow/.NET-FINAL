@@ -1,0 +1,12 @@
+﻿@model BookStore.Domain.Entities.Cart
+<div class="navbar-right d-none d-sm-block">
+    @Html.ActionLink("Заказать", "Index", "Cart",
+    new { returnUrl = Request.Url.PathAndQuery },
+    new { @class = "btn btn-success my-2 my-sm-0" })
+</div>
+<div class="nav navbar-nav ml-auto d-block d-sm-none">
+    <a href=@Url.Action("Index", "Cart", new { returnUrl = Request.Url.PathAndQuery })
+       class="btn btn-outline-success my-2 my-sm-0">
+        <i class="fas fa-shopping-cart"></i>
+    </a>
+</div>

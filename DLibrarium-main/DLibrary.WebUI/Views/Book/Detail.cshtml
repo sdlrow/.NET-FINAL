@@ -1,0 +1,40 @@
+﻿@using BookStore.WebUI.Models
+@using BookStore.WebUI.HtmlHelpers
+@model BookStore.Domain.Entities.Book
+@{
+    ViewBag.Title = "Books";
+}
+<div class="card row p-4" style="break-inside: avoid; background-color: #e6e6e6; border-color: #e6e6e6; transition: 1s ease-in;">
+    
+    <div class="d-flex flex-row" style="">
+        @if (@Model.ImageData != null)
+                            {
+                                <img style="width: 230px;"
+                                     src="@Url.Action("GetImage", "Book", new {Model.BookId})"/>
+                            }
+        <div class="p-5">
+            <h2>@Model.Title</h2>
+            <h4><span class="font-weight-normal">Author: @Model.Author.ToString()</span></h4>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    
+    
+    @if (Model.Quantity != 0)
+    {
+        using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="float-right">
+                @Html.HiddenFor(x => x.BookId)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Send Response to Get" style="background-color: #2bc064;"/>
+            </div>
+        }
+    }
+</div>
+
+<div class="btn-group bg-light mt-4" style="border-radius: 5px;">
+    <a class="navbar-brand" href="@Url.Action("List", "Book")">
+        <span class="d-none d-sm-block">Back to the main page</span>
+    </a>
+</div>

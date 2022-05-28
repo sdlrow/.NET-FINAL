@@ -1,0 +1,52 @@
+﻿@model BookStore.WebUI.Models.CartIndexViewModel
+@{
+    ViewBag.Title = "Ваша корзина";
+}
+<div class="form bg-light" style="border-color: white;">
+    <h2>Ваша корзина</h2>
+    @if (Model.Cart.Lines.Any())
+    {
+        <table id="cartTable" class="table bg-light">
+            <thead >
+                <tr>
+                    <th class="bg-light">Книга</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.Cart.Lines)
+                {
+                    <tr>
+                        <td class="text-left bg-light">@line.Book.Title</td>
+                        <td class="bg-light">
+                            @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                            {
+                                @Html.Hidden("BookId", line.Book.BookId)
+                                @Html.HiddenFor(x => x.ReturnUrl)
+                                <input class="btn btn-sm btn-warning" type="submit" value="Удалить" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h1 class="text-center">Нет товаров!</h1>
+        <br />
+    }
+    <div class="text-center">
+        <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить покупки</a>
+        @if (Model.Cart.Lines.Any())
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Login", "Auth")" class="btn btn-primary">Оформить заказ</a>
+            }
+            else
+            {
+                @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-primary" })
+            }
+        }
+    </div>
+</div>

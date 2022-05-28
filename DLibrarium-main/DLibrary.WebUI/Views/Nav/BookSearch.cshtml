@@ -1,0 +1,7 @@
+﻿@model IEnumerable<BookStore.Domain.Entities.Book>
+<div class="card-columns">
+@foreach (var item in Model)
+{
+    @Html.Partial("BookSummary", item)
+}
+</div>
